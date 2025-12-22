@@ -70,5 +70,34 @@ def train_model():
     joblib.dump(model, MODEL_OUTPUT_FILE)
     print(f"--- Success! Model saved to: {MODEL_OUTPUT_FILE} ---")
 
+    # 7. ANALYTICAL DATASET GENERATION (For Power BI)
+    print("--- Generating Dataset for Business Intelligence ---")
+
+    # We use the entire dataset (X) to simulate how the model would score it
+    all_predictions_prob = model.predict_proba(X)[:, 1]  # Approval probability
+
+    # We replicate YOUR exact business logic
+    df_analytics = df.copy()
+    df_analytics['Approval_Probability'] = all_predictions_prob
+
+    # Exact formula from your Service: 300 + (Prob * 550)
+    df_analytics['AI_Score'] = (300 + (df_analytics['Approval_Probability'] * 550)).astype(int)
+
+    # Risk Classification (Your logic)
+    def get_risk_level(score):
+        if score >= 750: 
+            return 'LOW'
+        elif score >= 650: 
+            return 'MEDIUM'
+        return 'HIGH'
+
+    df_analytics['Risk_Level'] = df_analytics['AI_Score'].apply(get_risk_level)
+
+    # Save new file
+    OUTPUT_CSV = 'nexus_bi_data.csv'
+    df_analytics.to_csv(OUTPUT_CSV, index=False)
+    print(f"--- [BI] File successfully generated: {OUTPUT_CSV} ---")
+
+
 if __name__ == "__main__":
     train_model()
