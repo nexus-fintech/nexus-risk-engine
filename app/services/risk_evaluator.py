@@ -1,9 +1,12 @@
 import pandas as pd
 import joblib
-import os
+from pathlib import Path
 from app.schemas.credit_request import CreditRequest
 from app.schemas.credit_score import CreditScore, RiskLevel
 from app.core.config import settings
+
+# The .pkl sits at the project root: next to the Dockerfile locally, /app inside the container
+MODEL_PATH = Path(__file__).resolve().parents[2] / "nexus_risk_model.pkl"
 
 class RiskEvaluatorService:
     """
@@ -12,12 +15,10 @@ class RiskEvaluatorService:
     loan eligibility.
     """
 
-    def __init__(self):
+    def __init__(self, model_path: Path = MODEL_PATH):
         # 1. Model Loading (Implicit Singleton)
-        # We look for the .pkl file copied to the container root during build
-        model_path = "nexus_risk_model.pkl"
-        
-        if os.path.exists(model_path):
+        # Resolved from this file, so it works from any working directory
+        if model_path.exists():
             self.model = joblib.load(model_path)
             print(f"AI Model loaded successfully from: {model_path}")
         else:
