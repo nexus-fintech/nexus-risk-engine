@@ -81,7 +81,9 @@ class RiskEvaluatorService:
         return RiskLevel.HIGH
 
     def _calculate_interest_rate(self, score: int, base_rate: float) -> float:
-        # Rate adjustment based on AI Score
-        if score >= 750: return base_rate - 0.02 
-        elif score >= 650: return base_rate      
-        return base_rate + 0.05                   
+        # Rate adjustment based on AI Score, rounded because the base rate is configurable
+        # and float sums leak noise (0.10 + 0.05 = 0.15000000000000002)
+        if score >= 750: rate = base_rate - 0.02
+        elif score >= 650: rate = base_rate
+        else: rate = base_rate + 0.05
+        return round(rate, 4)
