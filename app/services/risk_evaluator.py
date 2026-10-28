@@ -8,6 +8,9 @@ from app.core.config import settings
 # The .pkl sits at the project root: next to the Dockerfile locally, /app inside the container
 MODEL_PATH = Path(__file__).resolve().parents[2] / "nexus_risk_model.pkl"
 
+class ModelUnavailableError(RuntimeError):
+    """The trained model is not loaded, so no evaluation can be made."""
+
 class RiskEvaluatorService:
     """
     Domain service responsible for calculating credit scores using a pre-trained 
@@ -28,8 +31,8 @@ class RiskEvaluatorService:
 
     def evaluate(self, request: CreditRequest) -> CreditScore:
         # Operational Safety Check
-        if not self.model:
-            raise RuntimeError("AI Model is not initialized or found.")
+        if self.model is None:
+            raise ModelUnavailableError("AI Model is not initialized or found.")
 
         # 2. Data Vectorization (Feature Mapping)
         # Keys (Left): Must match Training Features exactly (nexus_credit_data.xlsx headers)

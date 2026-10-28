@@ -1,7 +1,11 @@
+import logging
+
 from fastapi import APIRouter, HTTPException, status
 from app.schemas.credit_request import CreditRequest
 from app.schemas.credit_score import CreditScore
-from app.services.risk_evaluator import RiskEvaluatorService
+from app.services.risk_evaluator import ModelUnavailableError, RiskEvaluatorService
+
+logger = logging.getLogger(__name__)
 
 router = APIRouter()
 risk_service = RiskEvaluatorService()
@@ -21,8 +25,15 @@ def evaluate_risk(request: CreditRequest):
     try:
         result = risk_service.evaluate(request)
         return result
-    except Exception as e:
+    except ModelUnavailableError:
+        raise HTTPException(
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+            detail="Risk model is not available. Try again later."
+        )
+    except Exception:
+        # The cause goes to the log, never to the client
+        logger.exception("Risk evaluation failed for client %s", request.client_id)
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail=f"Error processing risk evaluation: {str(e)}"
+            detail="Error processing risk evaluation."
         )
