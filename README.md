@@ -1,5 +1,7 @@
 # **Nexus Risk Engine 🧠**
 
+[![CI](https://github.com/nexus-fintech/nexus-risk-engine/actions/workflows/ci.yml/badge.svg)](https://github.com/nexus-fintech/nexus-risk-engine/actions/workflows/ci.yml)
+
 **Microservicio de evaluación de riesgo crediticio potenciado por Inteligencia Artificial. Actúa como el "cerebro" analítico de la plataforma Nexus Finance.**
 
 ## **📖 Descripción**
@@ -34,7 +36,7 @@ nexus-risk-engine/
 | Componente        | Tecnología   | Versión  | Razón de Uso                                                         |
 | :---------------- | :----------- | :------- | :------------------------------------------------------------------- |
 | **Lenguaje**      | Python       | **3.12** | Última versión estable con optimizaciones significativas de memoria. |
-| **Modelo IA**     | Scikit-learn | 1.5+     | Implementación robusta de Random Forest (Bosques Aleatorios).        |
+| **Modelo IA**     | Scikit-learn | 1.7.2    | Versión fija: la misma con la que se entrenó el modelo `.pkl`.       |
 | **API Framework** | FastAPI      | 0.115+   | Performance asíncrono y documentación automática (OpenAPI).          |
 | **Serialización** | Joblib       | 1.4+     | Carga y guardado eficiente de modelos de ML pesados                  |
 | **Procesamiento** | Pandas       | 2.2+     | Manipulación de vectores de datos y limpieza (ETL).                  |
@@ -73,6 +75,22 @@ python train_risk_model.py
 
 Nota: Esto generará un nuevo archivo nexus_risk_model.pkl. Para que el cambio surta efecto en producción, se debe reconstruir el contenedor Docker.
 
+## **🧪 Pruebas**
+
+46 pruebas automatizadas con **pytest** (97 % de cobertura sobre `app/`) que corren en cada push con GitHub Actions:
+
+| Archivo | Qué verifica |
+| :--- | :--- |
+| `tests/test_risk_evaluator.py` | Reglas de negocio con un modelo simulado: escala 300-850, umbrales de riesgo, umbral de aprobación, monto máximo y tasa por nivel de riesgo |
+| `tests/test_schemas.py` | Validación de la solicitud: rangos de edad, plazo y montos |
+| `tests/test_api.py` | Contrato de la API: 200, 422, 503 sin modelo y 500 sin exponer detalles internos |
+| `tests/test_model.py` | El modelo entrenado: variables esperadas, probabilidades válidas y orden lógico entre perfiles |
+
+```bash
+pip install -r requirements.txt pytest-cov
+pytest --cov=app
+```
+
 ## **🚀 Ejecución y Despliegue**
 
 ### **Docker (Producción)**
@@ -91,8 +109,8 @@ docker-compose up -d
 
 FastAPI genera documentación interactiva automáticamente para probar el modelo sin necesidad de Frontend:
 
-- 👉 **Swagger/OpenAPI:** [http://localhost:8000/docs](https://www.google.com/search?q=http://localhost:8000/docs)
-- 👉 **ReDoc:** [http://localhost:8000/redoc](https://www.google.com/search?q=http://localhost:8000/redoc)
+- 👉 **Swagger/OpenAPI:** [http://localhost:8000/docs](http://localhost:8000/docs)
+- 👉 **ReDoc:** [http://localhost:8000/redoc](http://localhost:8000/redoc)
 
 ## **👤 Autor**
 
