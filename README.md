@@ -8,7 +8,7 @@
 
 Este servicio es **Stateless** (sin estado) y utiliza un enfoque **Híbrido** de alto rendimiento:
 
-1.  **Machine Learning:** Utiliza un modelo **Random Forest Classifier** entrenado con datos históricos reales para predecir la probabilidad de impago con una precisión superior al **97%**.
+1.  **Machine Learning:** Un **Random Forest Classifier** estima la probabilidad de que una solicitud se apruebe a partir del ingreso, el monto, el plazo, la edad y la deuda mensual. Acierta el **97.8 %** de las decisiones en la parte del dataset que no vio al entrenar ([cómo se midió](#-desempeño-del-modelo)).
 2.  **Lógica de Negocio:** Aplica reglas financieras pos-análisis para calcular límites de montos (capacidad de endeudamiento) y tasas de interés personalizadas basadas en el riesgo detectado.
 
 Se comunica con el **Backend Core (Java)** mediante una API REST, desacoplando la lógica transaccional de la lógica analítica predictiva.
@@ -24,7 +24,7 @@ nexus-risk-engine/
 │   ├── services/     # Servicio de Dominio (Carga del modelo .pkl y lógica)
 │   ├── schemas/      # DTOs y Validación estricta (Pydantic)
 │   └── core/         # Configuración y Variables de Entorno
-├── nexus_credit_data.xlsx # Dataset histórico para entrenamiento (Fuente de Verdad)
+├── nexus_credit_data.xlsx # Dataset de entrenamiento: 4,269 solicitudes con su decisión
 ├── nexus_risk_model.pkl   # Modelo serializado (El "Cerebro" de la IA)
 ├── train_risk_model.py    # Pipeline de entrenamiento (ETL + Training)
 ├── Dockerfile             # Definición de la imagen del contenedor (Incluye el modelo)
@@ -74,6 +74,21 @@ python train_risk_model.py
 ```
 
 Nota: Esto generará un nuevo archivo nexus_risk_model.pkl. Para que el cambio surta efecto en producción, se debe reconstruir el contenedor Docker.
+
+## **📊 Desempeño del modelo**
+
+El dataset (`nexus_credit_data.xlsx`) tiene 4,269 solicitudes, el 59 % aprobadas. El script de entrenamiento separa el 20 % al azar (`random_state=42`) y entrena con el resto. Sobre ese 20 % (854 solicitudes que el modelo no vio), el modelo publicado `nexus_risk_model.pkl` obtiene:
+
+| Métrica | Valor |
+| :--- | :--- |
+| Exactitud | **97.8 %** (la clase mayoritaria sola daría 58.7 %) |
+| ROC-AUC | 0.998 |
+| Aprobaciones que el modelo rechazaría | 6 de 501 |
+| Rechazos que el modelo aprobaría | 13 de 353 |
+
+La deuda mensual es la variable que más pesa (59 % de la importancia), seguida del ingreso (23 %) y el monto (12 %).
+
+Estas cifras miden qué tan bien el modelo reproduce las decisiones de este dataset. No está validado con la cartera de una entidad financiera, así que no son una predicción de impago real.
 
 ## **🧪 Pruebas**
 
