@@ -74,15 +74,7 @@ Gracias a este análisis, se definieron las siguientes reglas de negocio para el
 
 ## 📸 Galería del Dashboard
 
-### 🔹 Tablero de Control y Simulador
-
-_Vista general del simulador de corte y KPIs financieros._
-![Dashboard Overview](dashboard_simulator.png)
-
-### 🔹 Matriz de Riesgo (Heatmap)
-
-_Análisis de concentración de pérdida por segmento de ingresos y score._
-![Risk Matrix](risk_heatmap.png)
+El simulador de corte con sus KPI y la matriz de pérdida por rango de ingresos y segmento están en una sola vista, la imagen de la sección «Vista del tablero» al inicio de este documento (`simulador-corte-score.png`).
 
 ---
 
