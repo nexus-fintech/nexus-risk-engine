@@ -8,6 +8,18 @@ A diferencia de los reportes estáticos tradicionales, este Dashboard implementa
 
 ---
 
+## 🖼️ Vista del tablero
+
+![Simulador de corte de score con el corte en 540: 39 millones aprobados, 1,15 millones de pérdida estimada, 3 mil clientes y la matriz de pérdida por rango de ingresos y segmento](simulador-corte-score.png)
+
+Vista rediseñada con los datos que produce el modelo (corte en 540). El archivo `Nexus_Risk_Dashboard.pbix` lleva estos mismos visuales; para darle este aspecto en Power BI Desktop:
+
+1. **Ver → Temas → Buscar temas** y elige `tema-nexus.json` (fondo, tipografía, tarjetas blancas y acento).
+2. Acomoda los cinco visuales: las tres tarjetas en una fila arriba (aprobado, pérdida, clientes), el deslizador del corte debajo a todo el ancho y la matriz al final.
+3. En la matriz, **Formato condicional → Color de fondo**: mínimo `#FDE6DC`, máximo `#BF4A27` (un solo tono: más oscuro, más pérdida).
+
+---
+
 ## 🏗️ Arquitectura de Datos (ETL Pipeline)
 
 El flujo de datos sigue una arquitectura de **Batch Scoring** para enriquecer la información antes de la visualización:

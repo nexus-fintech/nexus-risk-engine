@@ -1,0 +1,238 @@
+{
+  "name": "Nexus Riesgo",
+  "dataColors": [
+    "#BF4A27",
+    "#0E7C6C",
+    "#11242C",
+    "#5B7079",
+    "#EF9872",
+    "#9FB3AD"
+  ],
+  "background": "#F3F6F5",
+  "foreground": "#11242C",
+  "tableAccent": "#BF4A27",
+  "bad": "#BF4A27",
+  "neutral": "#9FB3AD",
+  "good": "#0E7C6C",
+  "textClasses": {
+    "title": {
+      "fontSize": 12,
+      "fontFace": "Segoe UI Semibold",
+      "color": "#11242C"
+    },
+    "label": {
+      "fontSize": 10,
+      "fontFace": "Segoe UI",
+      "color": "#5B7079"
+    },
+    "callout": {
+      "fontSize": 32,
+      "fontFace": "Segoe UI Bold",
+      "color": "#11242C"
+    }
+  },
+  "visualStyles": {
+    "*": {
+      "*": {
+        "background": [
+          {
+            "show": true,
+            "color": {
+              "solid": {
+                "color": "#FFFFFF"
+              }
+            },
+            "transparency": 0
+          }
+        ],
+        "border": [
+          {
+            "show": true,
+            "color": {
+              "solid": {
+                "color": "#D9E2DF"
+              }
+            },
+            "radius": 12
+          }
+        ],
+        "title": [
+          {
+            "show": true,
+            "fontColor": {
+              "solid": {
+                "color": "#5B7079"
+              }
+            },
+            "fontSize": 11
+          }
+        ]
+      }
+    },
+    "page": {
+      "*": {
+        "background": [
+          {
+            "color": {
+              "solid": {
+                "color": "#F3F6F5"
+              }
+            },
+            "transparency": 0
+          }
+        ],
+        "outspace": [
+          {
+            "color": {
+              "solid": {
+                "color": "#F3F6F5"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "cardVisual": {
+      "*": {
+        "fillCustom": [
+          {
+            "show": true,
+            "fillColor": {
+              "solid": {
+                "color": "#FFFFFF"
+              }
+            }
+          }
+        ],
+        "outline": [
+          {
+            "show": false
+          }
+        ],
+        "value": [
+          {
+            "fontSize": 30,
+            "fontFamily": "Segoe UI Bold",
+            "color": {
+              "solid": {
+                "color": "#11242C"
+              }
+            }
+          }
+        ],
+        "label": [
+          {
+            "fontSize": 11,
+            "color": {
+              "solid": {
+                "color": "#5B7079"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "pivotTable": {
+      "*": {
+        "values": [
+          {
+            "fontColorPrimary": {
+              "solid": {
+                "color": "#11242C"
+              }
+            },
+            "backColorPrimary": {
+              "solid": {
+                "color": "#FFFFFF"
+              }
+            },
+            "fontSize": 11
+          }
+        ],
+        "columnHeaders": [
+          {
+            "fontColor": {
+              "solid": {
+                "color": "#5B7079"
+              }
+            },
+            "backColor": {
+              "solid": {
+                "color": "#FFFFFF"
+              }
+            },
+            "bold": true
+          }
+        ],
+        "rowHeaders": [
+          {
+            "fontColor": {
+              "solid": {
+                "color": "#11242C"
+              }
+            },
+            "backColor": {
+              "solid": {
+                "color": "#FFFFFF"
+              }
+            }
+          }
+        ],
+        "grid": [
+          {
+            "gridHorizontalColor": {
+              "solid": {
+                "color": "#D9E2DF"
+              }
+            },
+            "gridVertical": false,
+            "rowPadding": 6
+          }
+        ],
+        "total": [
+          {
+            "fontColor": {
+              "solid": {
+                "color": "#11242C"
+              }
+            },
+            "bold": true
+          }
+        ]
+      }
+    },
+    "slicer": {
+      "*": {
+        "slider": [
+          {
+            "color": {
+              "solid": {
+                "color": "#0E7C6C"
+              }
+            }
+          }
+        ],
+        "header": [
+          {
+            "fontColor": {
+              "solid": {
+                "color": "#5B7079"
+              }
+            },
+            "fontSize": 11
+          }
+        ],
+        "numericInputStyle": [
+          {
+            "fontColor": {
+              "solid": {
+                "color": "#11242C"
+              }
+            },
+            "fontSize": 18
+          }
+        ]
+      }
+    }
+  }
+}
