@@ -6,6 +6,7 @@
 .env
 env/
 venv/
+.venv/
 venv_win/
 
 __pycache__
